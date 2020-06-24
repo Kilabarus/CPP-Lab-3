@@ -111,7 +111,7 @@ void MyVector<T>::ModifyElement(const int& index, std::function<void(T&)> modify
 template<class T>
 int MyVector<T>::RemoveElement(const T& item)
 {
-	typename std::vector<T>::iterator_t it = std::find(_vector.begin(), _vector.end(), item);
+	typename std::vector<T>::iterator it = std::find(_vector.begin(), _vector.end(), item);
 	if (it == _vector.end())
 		return -1;
 		
