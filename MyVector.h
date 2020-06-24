@@ -103,7 +103,7 @@ template<class T>
 void MyVector<T>::ModifyElement(const int& index, std::function<void(T&)> modifyFunction)
 {
 	if (IsIndexOk(index))
-		modify(_vector.at(index));
+		modifyFunction(_vector.at(index));
 	else
 		std::cout << "Индекс выходит за пределы контейнера" << std::endl;
 }
