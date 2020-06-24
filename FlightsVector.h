@@ -1,4 +1,4 @@
-#include "VectorOperations.h"
+#include "MyVector.h"
 #include "Flight.h"
 #include "Baggage.h"
 
@@ -7,6 +7,8 @@
 class FlightsVector
 {
 public:
-	VectorOperations<Flight> fVector;
-};
+	MyVector<Flight> flights;
 
+	void Serialize(std::string fileName);
+	void Deserialize(std::string fileName);
+};

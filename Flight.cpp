@@ -4,55 +4,76 @@
 
 void Flight::Serialize(std::string fileName)
 {
-	std::ofstream ofs(fileName, std::ios::binary | std::ios::out);
-	ofs.write((char*)& flightNumber, sizeof(int));
-	baggages.Serialize(ofs);
+	std::ofstream ofs(fileName);
+	ofs << this;
 	ofs.close();
-}
-
-void Flight::Deserialize(std::string fileName)
-{
-	std::ifstream ifs(fileName, std::ios::binary | std::ios::in);
-	ifs.read((char*)& flightNumber, sizeof(int));
-	baggages.Deserialize(ifs);
-	ifs.close();
 }
 
 std::ostream& operator<< (std::ostream& out, const Flight& flight)
 {
 	if (&out == &std::cout)
 	{
-		out << "Номер авиарейса: " << flight.flightNumber << std::endl;
+		out << "Номер авиарейса: " << flight.flightNumber << std::endl
+			<< "Маршрут: " << flight.departurePoint << " - " << flight.arrivalPoint << std::endl
+			<< "Время вылета: " << flight.flightDateTime << std::endl
+			<< "Количество багажей на авиарейсе: " << flight.baggages.GetSize() << std::endl
+			<< "Список багажей: " << std::endl << std::endl;
 		flight.baggages.PrintToConsole();
+		out << "-----------------------------------------------" << std::endl;
 	}
 	else
 	{
-		out << flight.flightNumber << std::endl;
-		flight.baggages.PrintToFile("test.txt");
+		out << flight.flightNumber << " "
+			<< flight.baggages.GetSize() << std::endl
+			<< flight.departurePoint << std::endl
+			<< flight.arrivalPoint << std::endl;
+		DateTime defaultDateTime;
+		if (flight.flightDateTime != defaultDateTime)
+			out << flight.flightDateTime << std::endl;
+		flight.baggages.PrintToFile(out);
 	}
 
 	return out;
+}
+
+void Flight::Deserialize(std::string fileName)
+{
+	std::ifstream ifs(fileName);
+	ifs >> *this;
+	ifs.close();
 }
 
 std::istream& operator>> (std::istream& in, Flight& flight)
 {
 	if (&in == &std::cin)
 	{
-		std::cout << "Введите номер рейса: ";
-		in >> flight.flightNumber;
-
+		flight.flightNumber = InputUnsigned("Введите номер авиарейса: ", 0, 9999);
+		flight.departurePoint = InputString("Введите пункт вылета: ");
+		flight.arrivalPoint = InputString("Введите пункт назначения: ");
+		in >> flight.flightDateTime;
 		flight.baggages.ReadFromConsole();
 	}
 	else
 	{
-		char buf[50];
+		int numOfBaggages;
+
 		in >> flight.flightNumber;
+		in >> numOfBaggages;
 
-		in.ignore();
-		in.getline(buf, 50);
-		flight.baggages.ReadFromFile();
+		if (numOfBaggages)
+		{
+			char buf[50];
+			in.ignore();
+			in.getline(buf, 50);
+			flight.departurePoint = std::string(buf);
 
-		in.ignore();
+			in.getline(buf, 50);
+			flight.arrivalPoint = std::string(buf);
+
+			in >> flight.flightDateTime;
+			
+			flight.baggages.ReadFromFile(in, numOfBaggages);
+		}		
 	}
 
 	return in;

@@ -1,0 +1,75 @@
+4
+
+101 2
+Voronezh
+Volgograd
+12 3 1999 20 10
+
+34
+Akchurina
+4
+10
+94
+Anokhina
+2
+5
+433 3
+Moskva
+Sochi
+1 9 2000 10 40
+
+43
+Ashikhin
+6
+23
+12
+Belikh
+2
+5
+67
+Vakhtin
+3
+15
+637 2
+Voronezh
+Praga
+16 7 2022 6 30
+
+28
+Danilchenko
+2
+12
+34
+Dubrovskikh
+3
+14
+193 6
+Sankt-Peterburg
+Los Angeles
+24 6 2018 19 10
+
+12
+Gubanov
+4
+21
+84
+Dorozhanskaya
+2
+3
+59
+Dubinina
+6
+14
+21
+Illarionov
+4
+14
+90
+Kosarev
+2
+7
+64
+Kretinina
+4
+12
+
